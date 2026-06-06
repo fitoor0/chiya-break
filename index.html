@@ -11,17 +11,25 @@
 </head>
 <body>
 
+    <!-- Floating Call Button -->
+    <a href="tel:+9779800000000" class="floating-call" aria-label="Call Us Now">
+        📞 <span class="call-text">Call Now</span>
+    </a>
+
+    <!-- Header Navigation -->
     <header>
         <div class="logo">Chiya <span>Break</span></div>
         <nav>
             <a href="#home">Home</a>
             <a href="#menu">Menu</a>
-            <a href="#about">Our Story</a>
+            <a href="#order">Place Order</a>
+            <a href="#reviews">Reviews</a>
             <a href="#contact">Contact</a>
             <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Take a break, sip some comfort.</h1>
@@ -30,6 +38,7 @@
         </div>
     </section>
 
+    <!-- Menu Section -->
     <section id="menu" class="menu-section">
         <div class="section-title">
             <h2>Our Menu</h2>
@@ -81,7 +90,7 @@
                     <span class="item-name">Crispy Samosa (2 pcs)</span>
                     <span class="item-price">Rs. 60</span>
                 </div>
-                <p class="item-desc">Golden-fried pastry pockets stuffed with seasoned potatoes, served with tangy chutney.</p>
+                <p class="item-desc">Golden-fried pastry pockets stuffed with seasoned potatoes, served with chutney.</p>
             </div>
 
             <div class="menu-item" data-category="snacks">
@@ -94,13 +103,101 @@
         </div>
     </section>
 
-    <section id="about" class="about-section">
-        <div class="about-content">
-            <h2>About Chiya Break</h2>
-            <p>At Chiya Break Manigram, we believe that a great cup of tea has the power to bring people together. Whether you are stepping out for a quick office break, catching up with old friends, or seeking a quiet moment to unwind, our doors are open to offer you warmth, comfort, and exceptional flavors.</p>
+    <!-- Order Section -->
+    <section id="order" class="order-section">
+        <div class="section-title">
+            <h2>Place an Order</h2>
+            <p>Select your favorites and submit to notify our kitchen crew</p>
+        </div>
+        <div class="order-container">
+            <form id="order-form">
+                <div class="form-group">
+                    <label for="order-name">Your Name</label>
+                    <input type="text" id="order-name" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="order-phone">Phone Number</label>
+                    <input type="tel" id="order-phone" required placeholder="Enter your mobile number">
+                </div>
+                <div class="form-group">
+                    <label for="order-item">Select Item</label>
+                    <select id="order-item" required>
+                        <option value="" data-price="0">-- Choose an item --</option>
+                        <option value="Masala Chiya" data-price="50">Masala Chiya (Rs. 50)</option>
+                        <option value="Matka Chiya" data-price="80">Matka Chiya (Rs. 80)</option>
+                        <option value="Iced Caramel Latte" data-price="180">Iced Caramel Latte (Rs. 180)</option>
+                        <option value="Americano" data-price="120">Americano (Rs. 120)</option>
+                        <option value="Crispy Samosa" data-price="60">Crispy Samosa (Rs. 60)</option>
+                        <option value="Peri Peri Fries" data-price="110">Peri Peri Fries (Rs. 110)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="order-qty">Quantity</label>
+                    <input type="number" id="order-qty" value="1" min="1" required>
+                </div>
+                <div class="total-display">
+                    Estimated Total: <span id="total-amount">Rs. 0</span>
+                </div>
+                <button type="submit" class="btn btn-full">Submit Order</button>
+            </form>
         </div>
     </section>
 
+    <!-- Review Section -->
+    <section id="reviews" class="review-section">
+        <div class="section-title">
+            <h2>Customer Reviews</h2>
+            <p>See what others are saying or leave your own review</p>
+        </div>
+        
+        <div class="review-layout">
+            <!-- Review Submission Form -->
+            <div class="review-form-container">
+                <h3>Write a Review</h3>
+                <form id="review-form">
+                    <div class="form-group">
+                        <label for="reviewer-name">Name</label>
+                        <input type="text" id="reviewer-name" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="star-rating">
+                            <span class="star" data-value="5">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="1">★</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="review-text">Your Thoughts</label>
+                        <textarea id="review-text" rows="4" required placeholder="Tell us about your experience..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Post Review</button>
+                </form>
+            </div>
+
+            <!-- Instant Live Display Panel -->
+            <div class="review-display-container">
+                <h3>Recent Reviews</h3>
+                <div id="reviews-list">
+                    <!-- Standard placeholder template reviews -->
+                    <div class="review-card">
+                        <div class="review-card-header">
+                            <span class="user-avatar">A</span>
+                            <div>
+                                <h4 class="user-name">Aayush Sharma</h4>
+                                <div class="review-stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="review-content">The Matka Chiya here is exceptional! Tastes exactly like traditional clay pot tea. Cozy vibe too.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
     <footer id="contact">
         <div class="footer-grid">
             <div class="footer-col">

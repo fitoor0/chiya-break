@@ -9,6 +9,8 @@
     --border-color: #eee7df;
     --shadow: 0 10px 30px rgba(176, 111, 67, 0.05);
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --star-gray: #ccc;
+    --star-gold: #ffb400;
 }
 
 [data-theme="dark"] {
@@ -39,6 +41,29 @@ body {
     color: var(--text-primary);
     transition: var(--transition);
     overflow-x: hidden;
+}
+
+/* --- Floating Call Button --- */
+.floating-call {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366; /* Clean Green Theme */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 2000;
+    transition: transform 0.3s ease;
+}
+
+.floating-call:hover {
+    transform: scale(1.05);
 }
 
 /* --- Header / Navigation --- */
@@ -93,10 +118,6 @@ nav a:hover {
     transition: transform 0.2s;
 }
 
-#theme-toggle:hover {
-    transform: scale(1.1);
-}
-
 /* --- Hero Section --- */
 .hero {
     height: 75vh;
@@ -114,7 +135,6 @@ nav a:hover {
     font-size: 3.5rem;
     color: #ffffff;
     margin-bottom: 20px;
-    animation: fadeIn Down 0.8s ease;
 }
 
 .hero-content p {
@@ -132,13 +152,17 @@ nav a:hover {
     text-decoration: none;
     border-radius: 30px;
     font-weight: 600;
+    border: none;
+    cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 5px 15px rgba(176, 111, 67, 0.3);
 }
 
 .btn:hover {
     background-color: var(--accent-hover);
-    transform: translateY(-2px);
+}
+
+.btn-full {
+    width: 100%;
 }
 
 /* --- Menu Styling --- */
@@ -199,11 +223,6 @@ nav a:hover {
     border-radius: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.menu-item:hover {
-    transform: translateY(-5px);
 }
 
 .item-header {
@@ -228,38 +247,175 @@ nav a:hover {
 .item-desc {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    line-height: 1.5;
 }
 
-/* --- About Section --- */
-.about-section {
-    padding: 80px 8%;
-    background-color: var(--bg-card);
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.about-content {
-    max-width: 750px;
-    margin: 0 auto;
-}
-
-.about-content h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
+/* --- Shared Form Fields --- */
+.form-group {
     margin-bottom: 20px;
 }
 
-.about-content p {
-    color: var(--text-secondary);
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    border-radius: 8px;
+    font-family: inherit;
+    outline: none;
+    transition: var(--transition);
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    border-color: var(--accent);
+}
+
+/* --- Order Styling --- */
+.order-section {
+    padding: 80px 8%;
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+}
+
+.order-container {
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: var(--bg-main);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.total-display {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 20px 0;
+    color: var(--accent);
+}
+
+/* --- Review Layout System (Google Play Style) --- */
+.review-section {
+    padding: 80px 8%;
+}
+
+.review-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.review-form-container, .review-display-container {
+    background-color: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.review-form-container h3, .review-display-container h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+}
+
+/* Star Selector system */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    font-size: 1.8rem;
+}
+
+.star-rating .star {
+    cursor: pointer;
+    color: var(--star-gray);
+    transition: color 0.1s;
+}
+
+.star-rating .star:hover,
+.star-rating .star:hover ~ .star,
+.star-rating .star.selected,
+.star-rating .star.selected ~ .star {
+    color: var(--star-gold);
+}
+
+/* Review Cards display list */
+#reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.review-card {
+    background-color: var(--bg-main);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    animation: slideIn 0.3s ease;
+}
+
+.review-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    background-color: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
     font-size: 1.1rem;
+}
+
+.user-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.review-stars {
+    color: var(--star-gold);
+    font-size: 0.9rem;
+}
+
+.review-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- Footer --- */
 footer {
     background-color: var(--bg-card);
     padding: 60px 8% 20px 8%;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-grid {
@@ -289,10 +445,16 @@ footer {
     font-size: 0.85rem;
 }
 
-/* --- Responsive Adjustments --- */
+/* --- Mobile Breakpoints --- */
+@media(max-width: 900px) {
+    .review-layout { grid-template-columns: 1fr; }
+    .floating-call .call-text { display: none; }
+    .floating-call { padding: 15px; bottom: 20px; right: 20px; }
+}
+
 @media(max-width: 768px) {
     header { padding: 20px 5%; }
     nav { gap: 15px; }
     .hero-content h1 { font-size: 2.4rem; }
-    .menu-section, .about-section { padding: 60px 5%; }
+    .menu-section, .order-section, .review-section { padding: 60px 5%; }
 }
