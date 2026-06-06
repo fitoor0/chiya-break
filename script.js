@@ -1,7 +1,7 @@
 // 1. Initialize Connection via Netlify Integration credentials
 // Paste your public credentials here from your Supabase dashboard API settings
-const NETLIFY_DB_URL = "https://your-project-id.supabase.co"; 
-const NETLIFY_DB_KEY = "your-actual-anon-public-key-here"; 
+const NETLIFY_DB_URL = "https://sbjthhieiwcxapmnhmls.supabase.co"; 
+const NETLIFY_DB_KEY = "sb_publishable_aU8jqnLcIpHMccKIj3OtXw_On4RWccd"; 
 
 const _db = supabase.createClient(NETLIFY_DB_URL, NETLIFY_DB_KEY);
 
