@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiya Break | Cozy Café Experience</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="logo">Chiya <span>Break</span></div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#about">Our Story</a>
+            <a href="#contact">Contact</a>
+            <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Take a break, sip some comfort.</h1>
+            <p>From traditional Matka Chiya to perfectly brewed espresso and savory snacks, your perfect break starts here.</p>
+            <a href="#menu" class="btn">Explore Menu</a>
+        </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+        <div class="section-title">
+            <h2>Our Menu</h2>
+            <p>Handcrafted beverages and tasty bites fresh daily</p>
+        </div>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All Items</button>
+            <button class="filter-btn" data-filter="chiya">Chiya Specials</button>
+            <button class="filter-btn" data-filter="coffee">Coffee</button>
+            <button class="filter-btn" data-filter="snacks">Snacks & More</button>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item" data-category="chiya">
+                <div class="item-header">
+                    <span class="item-name">Masala Chiya</span>
+                    <span class="item-price">Rs. 50</span>
+                </div>
+                <p class="item-desc">Authentic milk tea brewed with crushed cardamom, ginger, and signature spices.</p>
+            </div>
+
+            <div class="menu-item" data-category="chiya">
+                <div class="item-header">
+                    <span class="item-name">Matka Chiya</span>
+                    <span class="item-price">Rs. 80</span>
+                </div>
+                <p class="item-desc">Traditional rich, sweet tea served steaming hot in an organic earthen clay pot.</p>
+            </div>
+
+            <div class="menu-item" data-category="coffee">
+                <div class="item-header">
+                    <span class="item-name">Iced Caramel Latte</span>
+                    <span class="item-price">Rs. 180</span>
+                </div>
+                <p class="item-desc">Rich espresso layered with chilled milk and premium buttery caramel syrup.</p>
+            </div>
+
+            <div class="menu-item" data-category="coffee">
+                <div class="item-header">
+                    <span class="item-name">Americano</span>
+                    <span class="item-price">Rs. 120</span>
+                </div>
+                <p class="item-desc">A smooth, bold shot of espresso extracted over clean hot water.</p>
+            </div>
+
+            <div class="menu-item" data-category="snacks">
+                <div class="item-header">
+                    <span class="item-name">Crispy Samosa (2 pcs)</span>
+                    <span class="item-price">Rs. 60</span>
+                </div>
+                <p class="item-desc">Golden-fried pastry pockets stuffed with seasoned potatoes, served with tangy chutney.</p>
+            </div>
+
+            <div class="menu-item" data-category="snacks">
+                <div class="item-header">
+                    <span class="item-name">Peri Peri Fries</span>
+                    <span class="item-price">Rs. 110</span>
+                </div>
+                <p class="item-desc">Crispy golden fries tossed in a fiery, aromatic house-blend peri peri seasoning.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="about-content">
+            <h2>About Chiya Break</h2>
+            <p>At Chiya Break Manigram, we believe that a great cup of tea has the power to bring people together. Whether you are stepping out for a quick office break, catching up with old friends, or seeking a quiet moment to unwind, our doors are open to offer you warmth, comfort, and exceptional flavors.</p>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Chiya Break</h3>
+                <p>Your favorite neighborhood hangout spot for stellar beverages and conversations.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Timings</h3>
+                <p>Monday - Sunday</p>
+                <p><strong>7:00 AM - 9:00 PM</strong></p>
+            </div>
+            <div class="footer-col">
+                <h3>Find Us</h3>
+                <p>Manigram, Butwal, Nepal</p>
+                <p>Email: contact@chiyabreak.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Chiya Break. Crafted beautifully.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
