@@ -1,9 +1,15 @@
+// 1. Initialize Connection via Netlify Integration credentials
+// Paste your public credentials here from your Supabase dashboard API settings
+const NETLIFY_DB_URL = "https://your-project-id.supabase.co"; 
+const NETLIFY_DB_KEY = "your-actual-anon-public-key-here"; 
+
+const _db = supabase.createClient(NETLIFY_DB_URL, NETLIFY_DB_KEY);
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- Dark / Light Mode Feature ---
     const themeToggle = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
-
     document.documentElement.setAttribute('data-theme', currentTheme);
     themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
 
@@ -28,9 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-
             const filterValue = button.getAttribute('data-filter');
-
             menuItems.forEach(item => {
                 if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                     item.style.display = 'block';
@@ -59,23 +63,39 @@ document.addEventListener('DOMContentLoaded', () => {
     orderItemSelect.addEventListener('change', calculateTotal);
     orderQtyInput.addEventListener('input', calculateTotal);
 
-    orderForm.addEventListener('submit', (e) => {
+    // --- Database Insert: Orders Form ---
+    orderForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        alert(`Thank you for your order, ${document.getElementById('order-name').value}! Our crew will contact you shortly to confirm your details.`);
-        orderForm.reset();
-        totalAmountSpan.textContent = "Rs. 0";
+        
+        const customerName = document.getElementById('order-name').value;
+        const phone = document.getElementById('order-phone').value;
+        const item = orderItemSelect.value;
+        const quantity = parseInt(orderQtyInput.value);
+
+        // Submits directly to your linked database table
+        const { error } = await _db
+            .from('orders')
+            .insert([{ customer_name: customerName, phone: phone, item: item, quantity: quantity }]);
+
+        if (error) {
+            alert("Database connection error. Try again.");
+            console.error(error);
+        } else {
+            alert(`Order received, ${customerName}! Our crew is on it.`);
+            orderForm.reset();
+            totalAmountSpan.textContent = "Rs. 0";
+        }
     });
 
-    // --- Persistent Google Play Style Review System ---
+    // --- Global Review System ---
     const stars = document.querySelectorAll('.star-rating .star');
     const reviewForm = document.getElementById('review-form');
     const reviewsList = document.getElementById('reviews-list');
     let chosenRating = 0;
 
-    // Load saved reviews from localStorage as soon as the page loads
-    loadSavedReviews();
+    // Load global cloud reviews instantly on page mount
+    loadGlobalDatabaseReviews();
 
-    // Star Selection Interaction
     stars.forEach(star => {
         star.addEventListener('click', () => {
             chosenRating = parseInt(star.getAttribute('data-value'));
@@ -89,47 +109,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Review Submission
-    reviewForm.addEventListener('submit', (e) => {
+    // --- Database Insert: Post Review ---
+    reviewForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const nameValue = document.getElementById('reviewer-name').value.trim();
         const textValue = document.getElementById('review-text').value.trim();
 
         if (chosenRating === 0) {
-            alert("Please provide a star rating for your break session!");
+            alert("Please pick a star rating!");
             return;
         }
 
-        // Create a review object
-        const newReview = {
-            name: nameValue,
-            rating: chosenRating,
-            text: textValue,
-            timestamp: new Date().getTime() // used to keep track of order
-        };
+        const newReviewData = { name: nameValue, rating: chosenRating, text: textValue };
 
-        // Save review to localStorage database array
-        saveReviewToStorage(newReview);
+        // Post to global table
+        const { error } = await _db.from('reviews').insert([newReviewData]);
 
-        // Display the review instantly on screen
-        renderReviewCard(newReview, true);
-
-        // Reset elements securely
-        reviewForm.reset();
-        chosenRating = 0;
-        stars.forEach(s => s.classList.remove('selected'));
-        reviewsList.scrollTop = 0;
+        if (error) {
+            alert("Submission error.");
+        } else {
+            // Render on screen immediately
+            renderReviewCard(newReviewData, true);
+            reviewForm.reset();
+            chosenRating = 0;
+            stars.forEach(s => s.classList.remove('selected'));
+            reviewsList.scrollTop = 0;
+        }
     });
 
-    // Function to render a single review item card inside the HTML layout
     function renderReviewCard(review, isNewItem = false) {
         const starString = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
         const firstLetter = review.name.charAt(0).toUpperCase();
 
         const reviewCard = document.createElement('div');
         reviewCard.classList.add('review-card');
-        
         reviewCard.innerHTML = `
             <div class="review-card-header">
                 <span class="user-avatar">${firstLetter}</span>
@@ -142,25 +156,26 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         if (isNewItem) {
-            // Put brand new custom reviews at the absolute top of the list
             reviewsList.insertBefore(reviewCard, reviewsList.firstChild);
         } else {
-            // Append old stored reviews to the container naturally
             reviewsList.appendChild(reviewCard);
         }
     }
 
-    // Function to save review into localStorage
-    function saveReviewToStorage(review) {
-        let reviews = JSON.parse(localStorage.getItem('cafeReviews')) || [];
-        reviews.unshift(review); // Add new review to the beginning of the saved array
-        localStorage.setItem('cafeReviews', JSON.stringify(reviews));
-    }
+    // --- Database Fetch: Read global records ---
+    async function loadGlobalDatabaseReviews() {
+        const { data, error } = await _db
+            .from('reviews')
+            .select('*')
+            .order('id', { ascending: false }); // pulls the newest items first
 
-    // Function to fetch and build elements from storage array
-    function loadSavedReviews() {
-        let reviews = JSON.parse(localStorage.getItem('cafeReviews')) || [];
-        reviews.forEach(review => {
+        if (error) {
+            console.error("Database connection issue: ", error);
+            return;
+        }
+
+        reviewsList.innerHTML = ''; // clear out fallback template values
+        data.forEach(review => {
             renderReviewCard(review, false);
         });
     }
