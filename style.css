@@ -217,12 +217,41 @@ nav a:hover {
     gap: 30px;
 }
 
+/* --- Updated Menu Item Cards with Images --- */
 .menu-item {
     background-color: var(--bg-card);
-    padding: 30px;
     border-radius: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
+    overflow: hidden; /* Keeps the image corners rounded inside the card */
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+}
+
+.item-img-container {
+    width: 100%;
+    height: 200px; /* Adjust height of the food cover photos */
+    overflow: hidden;
+}
+
+.item-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Prevents stretching, crops image beautifully */
+    transition: transform 0.5s ease;
+}
+
+.menu-item:hover .item-img-container img {
+    transform: scale(1.08); /* Zoom effect when user hovers over a item */
+}
+
+.item-body {
+    padding: 25px; /* Adds space inside the text container area below image */
 }
 
 .item-header {
@@ -242,11 +271,13 @@ nav a:hover {
     color: var(--accent);
     font-weight: 600;
     font-size: 1.1rem;
+    white-space: nowrap;
 }
 
 .item-desc {
     color: var(--text-secondary);
     font-size: 0.9rem;
+    line-height: 1.5;
 }
 
 /* --- Shared Form Fields --- */
